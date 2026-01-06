@@ -63,16 +63,6 @@
                     android:layout_marginTop="10dp"
                     android:text="סטטוס: מוכן"
                     android:textSize="14sp"/>
-            
-    
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages_dup1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="הודעות"
-        android:layout_marginTop="10dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
@@ -117,16 +107,6 @@
                         android:text="(לוגים יופיעו כאן...)"
                         android:textSize="12sp"/>
                 </ScrollView>
-            
-    
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages_dup2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="הודעות"
-        android:layout_marginTop="10dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
@@ -137,16 +117,6 @@
 
 </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-    
-    
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages_dup3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="הודעות"
-        android:layout_marginTop="10dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
