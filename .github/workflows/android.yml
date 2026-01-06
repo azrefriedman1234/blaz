@@ -29,7 +29,14 @@ jobs:
 
       - name: Build Debug APK
         run: |
-          ./gradlew :app:assembleDebug --no-daemon
+          set -o pipefail
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace --info --console=plain 2>&1 | tee build.log
+      - name: Upload build log
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
