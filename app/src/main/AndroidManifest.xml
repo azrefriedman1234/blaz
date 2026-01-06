@@ -18,6 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pasiflonet">
+
+        <activity android:name=".ui.MessagesActivity" android:exported="false" />
+
         <service android:name=".td.TdForegroundService" android:exported="false" android:stopWithTask="false" android:foregroundServiceType="dataSync" />        <activity android:name=".ui.DetailsActivity">
         </activity>
 
