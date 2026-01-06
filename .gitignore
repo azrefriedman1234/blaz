@@ -22,3 +22,10 @@ app/src/main/java/com/pasiflonet/mobile/ui/DetailsActivity.kt.broken_*
 /third_party/**
 /app/src/main/jniLibs/
 /app/src/main/jniLibs/**
+
+# --- binaries / caches ---
+tmp/
+**/*.so
+**/*.aar
+**/*.jar
+
