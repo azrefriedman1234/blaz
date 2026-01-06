@@ -127,4 +127,16 @@
 
 </LinearLayout>
 
+
+<com.google.android.material.button.MaterialButton
+    android:id="@+id/btnPickVideo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Pick Video" />
+
+<com.google.android.material.button.MaterialButton
+    android:id="@+id/btnClearTemp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Clear Temp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
