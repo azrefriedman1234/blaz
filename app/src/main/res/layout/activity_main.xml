@@ -47,30 +47,13 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnPickVideo"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="בחר וידאו"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnClearTemp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="10dp"
-                        android:text="נקה זמניים"/>
-                
-    
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="הודעות"
-        android:layout_marginTop="10dp" />
+        android:text="Messages"
+        android:layout_marginTop="12dp" />
+
 </LinearLayout>
 
                 <TextView
@@ -90,6 +73,14 @@
         android:layout_height="wrap_content"
         android:text="הודעות"
         android:layout_marginTop="10dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Messages"
+        android:layout_marginTop="12dp" />
+
 </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -136,6 +127,14 @@
         android:layout_height="wrap_content"
         android:text="הודעות"
         android:layout_marginTop="10dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Messages"
+        android:layout_marginTop="12dp" />
+
 </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     
@@ -148,6 +147,14 @@
         android:layout_height="wrap_content"
         android:text="הודעות"
         android:layout_marginTop="10dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Messages"
+        android:layout_marginTop="12dp" />
+
 </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
