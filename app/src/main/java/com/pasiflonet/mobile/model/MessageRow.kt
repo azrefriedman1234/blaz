@@ -12,5 +12,6 @@ data class MessageRow(
     val mediaKind: String?,
     val thumbLocalPath: String? = null,
     val miniThumbBase64: String? = null,
+    val thumbFileId: Int? = null,
     val hasMedia: Boolean
 )

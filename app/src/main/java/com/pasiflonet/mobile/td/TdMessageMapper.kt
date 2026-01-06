@@ -14,12 +14,15 @@ object TdMessageMapper {
     }
 
     fun mapToRow(chatId: Long, message: TdApi.Message, thumbLocalPath: String?, miniThumbB64: String?): MessageRow {
-        val (text, hasMedia, mediaKind) = extractTextAndMedia(message.content)
+        
+        val thumbFileId = getThumbFileId(message.content)
+val (text, hasMedia, mediaKind) = extractTextAndMedia(message.content)
         val typeLabel = buildString {
             append("ערוץ")
             if (mediaKind != null) append(" • ").append(mediaKind)
         }
         return MessageRow(
+            thumbFileId = thumbFileId,
             chatId = chatId,
             messageId = message.id,
             text = text,
