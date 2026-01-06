@@ -65,7 +65,7 @@
                     android:textSize="14sp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages"
+        android:id="@+id/btnMessages_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Messages"
@@ -109,7 +109,7 @@
                 </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages"
+        android:id="@+id/btnMessages_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Messages"
@@ -119,7 +119,7 @@
         </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages"
+        android:id="@+id/btnMessages_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Messages"
