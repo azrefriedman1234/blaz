@@ -57,12 +57,7 @@ android {
     }
 }
 
-val tdAarUrl = "https://jitpack.io/com/github/tdlibx/td/1.8.56/td-1.8.56.aar"
-val ffmpegAarUrl = "https://artifactory.appodeal.com/appodeal-public/com/arthenica/ffmpeg-kit-full-gpl/6.0-2.LTS/ffmpeg-kit-full-gpl-6.0-2.LTS.aar"
-
 val libsDir = project.layout.projectDirectory.dir("libs").asFile
-val tdAarFile = File(libsDir, "td-1.8.56.aar")
-val ffmpegAarFile = File(libsDir, "ffmpeg-kit-full-gpl-6.0-2.LTS.aar")
 
 tasks.register("downloadAars") {
     doLast {
@@ -74,8 +69,6 @@ tasks.register("downloadAars") {
                 out.outputStream().use { output -> input.copyTo(output) }
             }
         }
-        download(tdAarUrl, tdAarFile)
-        download(ffmpegAarUrl, ffmpegAarFile)
     }
 }
 
@@ -95,18 +88,9 @@ dependencies {
     implementation("androidx.media3:media3-common:1.9.0")
     implementation("androidx.media3:media3-exoplayer:1.9.0")
     implementation("androidx.media3:media3-ui:1.9.0")
-implementation("com.arthenica:smart-exception-java:0.2.1")
-    implementation("com.arthenica:smart-exception-common:0.2.1")
 // ML Kit (on-device translate)
     implementation("com.google.mlkit:language-id:17.0.6")
     implementation("com.google.mlkit:translate:17.0.3")
-
-    implementation(files("libs/td-1.8.56.aar"))
-    implementation(files("libs/ffmpeg-kit-full-gpl-6.0-2.LTS.aar"))
-
-    implementation(files("libs/${tdAarFile.name}"))
-    implementation(files("libs/${ffmpegAarFile.name}"))
-
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
