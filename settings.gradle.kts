@@ -11,7 +11,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven(url = uri("https://jitpack.io"))
+        // JitPack נשאר רק אם יש לך עוד ספריות משם (לא חובה ל-AAR מקומי)
+        maven(url = "https://jitpack.io")
     }
 }
 
