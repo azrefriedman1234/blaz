@@ -98,10 +98,8 @@ companion object {
 
             // FFmpeg log bridge (single)
             runCatching {
-                FFmpegKitConfig.enableLogCallback { log ->
                     pushLine("[FFMPEG ${log.level}] ${log.message}".take(900))
                 }
-                FFmpegKitConfig.enableStatisticsCallback { stat: Statistics ->
                     pushLine("[STAT] time=${'$'}{stat.time} size=${'$'}{stat.size} bitrate=${'$'}{stat.bitrate} speed=${'$'}{stat.speed}".take(900))
                 }
             }.onFailure {
@@ -521,10 +519,7 @@ companion object {
 
         val cmd = args.joinToString(" ")
         Log.i(TAG, "FFmpeg cmd: $cmd")
-
-        val session = FFmpegKit.execute(cmd)
         val rc = session.returnCode
-        val ok = rc != null && ReturnCode.isSuccess(rc)
 
         if (!ok) {
             Log.e(TAG, "FFmpeg failed rc=$rc")
