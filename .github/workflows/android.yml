@@ -28,14 +28,27 @@ jobs:
           gradle-version: 8.2
 
       - name: Build Debug APK
+      continue-on-error: true
         run: |
           set -o pipefail
           ./gradlew :app:assembleDebug --no-daemon --stacktrace --warning-mode=summary --console=plain 2>&1 | tee build.log
       - name: Upload build log
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build-log
           path: build.log
+
+      - name: Show error summary
+        if: always()
+        run: |
+          echo "==== FIRST FAILURE BLOCK ===="
+          grep -n -m1 -B2 -A40 "FAILURE: Build failed" build.log || true
+          echo "==== FIRST * What went wrong ===="
+          grep -n -m1 -B2 -A60 "\* What went wrong:" build.log || true
+          echo "==== FIRST ERROR/Exception lines ===="
+          grep -n -m1 -B2 -A60 "ERROR:|Exception|Caused by:" build.log || true
+
 
 
       - name: Upload APK
