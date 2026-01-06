@@ -62,13 +62,15 @@
                         android:layout_marginStart="10dp"
                         android:text="נקה זמניים"/>
                 
+    
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הודעות"
         android:layout_marginTop="10dp" />
-
 </LinearLayout>
 
                 <TextView
@@ -79,13 +81,15 @@
                     android:text="סטטוס: מוכן"
                     android:textSize="14sp"/>
             
+    
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הודעות"
         android:layout_marginTop="10dp" />
-
 </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -123,23 +127,27 @@
                         android:textSize="12sp"/>
                 </ScrollView>
             
+    
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הודעות"
         android:layout_marginTop="10dp" />
-
 </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     
+    
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הודעות"
         android:layout_marginTop="10dp" />
-
 </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
