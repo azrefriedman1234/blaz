@@ -38,3 +38,5 @@ tmp/
 /tmp/**
 app/tmp/
 app/tmp/**
+
+!gradle/wrapper/gradle-wrapper.jar
