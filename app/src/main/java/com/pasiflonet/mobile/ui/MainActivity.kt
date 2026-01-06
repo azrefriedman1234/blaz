@@ -65,14 +65,6 @@ class MainActivity : AppCompatActivity() {
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         }
-
-        // אם יש לך כפתור בשם btnMessages ב-XML – נשתמש בו.
-        // אם אין, פשוט תוסיף כפתור ב-activity_main.xml או תגיד לי ואייצר לך אוטומטית.
-        val btnMessages = findViewById<MaterialButton?>(R.id.btnMessages)
-        btnMessages?.setOnClickListener {
-            startActivity(Intent(this, MessagesActivity::class.java))
-        }
-
         tvStatus.text = "סטטוס: בחר וידאו כדי להתחיל"
     }
 

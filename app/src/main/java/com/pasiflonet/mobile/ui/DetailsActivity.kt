@@ -84,22 +84,34 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun exportEdited() {
         val uri = inputUri ?: return
-        tvStatus.text = "מייצא... (FFmpeg)"
-        Thread {
-            try {
-                val res = VideoEditPipeline.editVideoBlocking(
-                    ctx = applicationContext,
-                    input = uri,
-                    blurRects = overlay.getBlurRectsNormalized(),
-                    watermarkText = etWatermark.text?.toString()
+        tvStatus.text = "מייצא... (Media3)"
+
+        VideoEditPipeline.export(
+            context = applicationContext,
+            inputUri = uri,
+            blurRects = overlay.getBlurRectsNormalized(),
+            watermark = null
+        ) { result ->
+            runOnUiThread {
+                result.fold(
+                    onSuccess = { outUri ->
+                        outFilePath = outUri.path
+                        tvStatus.text = "הייצוא הצליח ✅
+" + (outUri.path ?: "")
+                        outUri.path?.let { path ->
+                            videoView.setVideoPath(path)
+                            videoView.start()
+                        }
+                    },
+                    onFailure = { e ->
+                        tvStatus.text = "הייצוא נכשל ❌
+" + (e.message ?: e.toString())
+                    }
                 )
-                outFilePath = res.outFile.absolutePath
-                runOnUiThread {
-                    tvStatus.text = "הייצוא הצליח ✅\n${res.outFile.name}\n${res.outFile.absolutePath}"
-                    // load edited for preview
-                    videoView.setVideoPath(res.outFile.absolutePath)
-                    videoView.start()
-                }
+            }
+        }
+    }
+
             } catch (t: Throwable) {
                 runOnUiThread {
                     tvStatus.text = "הייצוא נכשל ❌\n${t.message}"

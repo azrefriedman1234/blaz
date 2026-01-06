@@ -8,6 +8,9 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.transformer.EditedMediaItem
 import androidx.media3.transformer.Effects
 import androidx.media3.transformer.Transformer
+import androidx.media3.transformer.ExportException
+import androidx.media3.transformer.Composition
+import androidx.media3.transformer.ExportResult
 import com.google.common.collect.ImmutableList
 import java.io.File
 
@@ -50,18 +53,11 @@ object VideoEditPipeline {
             val transformer = Transformer.Builder(context).build()
 
             transformer.addListener(object : Transformer.Listener {
-                override fun onCompleted(
-                    composition: androidx.media3.transformer.Composition,
-                    result: androidx.media3.transformer.ExportResult
-                ) {
+                override fun onCompleted(composition: Composition, result: ExportResult) {
                     onDone(Result.success(Uri.fromFile(outFile)))
                 }
 
-                override fun onError(
-                    composition: androidx.media3.transformer.Composition,
-                    result: androidx.media3.transformer.ExportResult,
-                    exception: Exception
-                ) {
+                override fun onError(composition: Composition, result: ExportResult, exception: ExportException) {
                     onDone(Result.failure(exception))
                 }
             })
