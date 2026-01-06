@@ -14,6 +14,14 @@ import java.util.ArrayDeque
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
+import com.pasiflonet.mobile.util.Kind
+import com.pasiflonet.mobile.util.MediaInfo
+import com.pasiflonet.mobile.util.RectN
+import com.pasiflonet.mobile.util.BlurRectN
+import com.pasiflonet.mobile.util.WatermarkConfig
+import com.pasiflonet.mobile.util.VideoEditPipeline
+
+private const val TAG = "SendWorker"
 
 class SendWorker(appContext: Context, params: WorkerParameters) : Worker(appContext, params) {
 
@@ -66,7 +74,7 @@ companion object {
     private data class MediaInfo(val kind: Kind, val fileId: Int)
 
     override fun doWork(): Result {
-        val logDir = File(applicationContext.getExternalFilesDir(null), "pasiflonet_logs").apply { mkdirs() }
+        val logDir = File(this@SendWorker.applicationContext.getExternalFilesDir(null), "pasiflonet_logs").apply { mkdirs() }
         val logFile = File(logDir, "send_${System.currentTimeMillis()}.log")
         val tail = ArrayDeque<String>(240)
 
@@ -90,7 +98,7 @@ companion object {
             )
         }
 
-        val tmpDir = File(applicationContext.cacheDir, "pasiflonet_tmp").apply { mkdirs() }
+        val tmpDir = File(this@SendWorker.applicationContext.cacheDir, "pasiflonet_tmp").apply { mkdirs() }
 
         try {
             pushLine("=== SendWorker started ===")
@@ -140,7 +148,7 @@ companion object {
                 return fail("Missing target username")
             }
 
-            TdLibManager.init(applicationContext)
+            TdLibManager.init(this@SendWorker.applicationContext)
             TdLibManager.ensureClient()
 
             val targetChatId = resolveTargetChatId(targetUsernameRaw)
@@ -152,8 +160,6 @@ companion object {
             // TEXT only
             if (!sendWithMedia) {
                 val content = TdApi.InputMessageText(captionFmt, lpOpts, false)
-                val ok = sendMessage(targetChatId, content)
-                return if (ok) Result.success(workDataOf(KEY_LOG_FILE to logFile.absolutePath)) else fail("Send TEXT failed")
             }
 
             // optional edits
@@ -173,7 +179,6 @@ companion object {
                     inputFile
                 } else {
                     val outFile = File(tmpDir, "out_${System.currentTimeMillis()}${extFor(kind)}")
-                    val ok = runFfmpegEdits(
                         input = inputFile,
                         output = outFile,
                         kind = kind,
@@ -182,12 +187,10 @@ companion object {
                         wmX = wmX,
                         wmY = wmY
                     )
-                    if (ok) outFile else inputFile
                 }
 
                 val content = buildContent(kind, finalFile, captionFmt)
                 val sentOk = sendMessage(targetChatId, content)
-                pushLine("SENT uri-media kind=$kind edits=${(wmFile!=null)||rects.isNotEmpty()} ok=$sentOk")
                 return if (sentOk) Result.success(workDataOf(KEY_LOG_FILE to logFile.absolutePath)) else fail("Send media failed")
             }
 
@@ -195,22 +198,16 @@ companion object {
             if (srcChatId == 0L || srcMsgId == 0L) {
                 // if user wanted media but didn't provide it and no src ids -> fallback to text
                 val content = TdApi.InputMessageText(captionFmt, lpOpts, false)
-                val ok = sendMessage(targetChatId, content)
-                return if (ok) Result.success(workDataOf(KEY_LOG_FILE to logFile.absolutePath)) else fail("Missing src ids and media_uri; text fallback failed")
             }
 
             val msg = getMessageSync(srcChatId, srcMsgId) ?: return fail("GetMessage failed")
             val media = extractMedia(msg) ?: run {
                 // fallback to text
                 val content = TdApi.InputMessageText(captionFmt, lpOpts, false)
-                val ok = sendMessage(targetChatId, content)
-                return if (ok) Result.success(workDataOf(KEY_LOG_FILE to logFile.absolutePath)) else fail("No media in src message; text fallback failed")
             }
 
             val srcFile = downloadFileToLocal(media.fileId, timeoutSec = 90) ?: run {
                 val content = TdApi.InputMessageText(captionFmt, lpOpts, false)
-                val ok = sendMessage(targetChatId, content)
-                return if (ok) Result.success(workDataOf(KEY_LOG_FILE to logFile.absolutePath)) else fail("DownloadFile failed; text fallback failed")
             }
 
             val inputFile = File(tmpDir, "in_${System.currentTimeMillis()}${extFor(media.kind)}")
@@ -220,7 +217,6 @@ companion object {
                 inputFile
             } else {
                 val outFile = File(tmpDir, "out_${System.currentTimeMillis()}${extFor(media.kind)}")
-                val ok = runFfmpegEdits(
                     input = inputFile,
                     output = outFile,
                     kind = media.kind,
@@ -229,12 +225,10 @@ companion object {
                     wmX = wmX,
                     wmY = wmY
                 )
-                if (ok) outFile else inputFile
             }
 
             val content = buildContent(media.kind, finalFile, captionFmt)
             val sentOk = sendMessage(targetChatId, content)
-            pushLine("SENT src-media kind=${'$'}{media.kind} edits=${(wmFile!=null)||rects.isNotEmpty()} ok=$sentOk")
             return if (sentOk) Result.success(workDataOf(KEY_LOG_FILE to logFile.absolutePath)) else fail("Send media failed")
 
         } catch (t: Throwable) {
@@ -320,7 +314,7 @@ companion object {
     private fun resolveUriToTempFile(uri: Uri, tmpDir: File, name: String): File? {
         return try {
             val out = File(tmpDir, name)
-            applicationContext.contentResolver.openInputStream(uri)?.use { input ->
+            this@SendWorker.applicationContext.contentResolver.openInputStream(uri)?.use { input ->
                 FileOutputStream(out).use { output ->
                     input.copyTo(output)
                 }
@@ -412,7 +406,6 @@ companion object {
 
     private fun sendMessage(chatId: Long, content: TdApi.InputMessageContent): Boolean {
         val latch = CountDownLatch(1)
-        var ok = false
 
         val req = TdApi.SendMessage().apply {
             this.chatId = chatId
@@ -420,13 +413,10 @@ companion object {
         }
 
         TdLibManager.send(req) { obj ->
-            ok = obj !is TdApi.Error
-            if (!ok) Log.e(TAG, "SendMessage error: $obj")
             latch.countDown()
         }
 
         latch.await(30, TimeUnit.SECONDS)
-        return ok
     }
 
     private fun q(path: String): String = "'" + path.replace("'", "'\\''") + "'"
@@ -519,11 +509,8 @@ companion object {
 
         val cmd = args.joinToString(" ")
         Log.i(TAG, "FFmpeg cmd: $cmd")
-        val rc = session.returnCode
 
-        if (!ok) {
             Log.e(TAG, "FFmpeg failed rc=$rc")
-            Log.e(TAG, "FFmpeg logs:\n" + session.allLogsAsString)
             return false
         }
 
