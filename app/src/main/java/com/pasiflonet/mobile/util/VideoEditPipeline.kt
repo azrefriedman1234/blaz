@@ -58,7 +58,7 @@ object VideoEditPipeline {
                     onDone(Result.success(Uri.fromFile(outFile)))
                 }
 
-                override fun onError(composition: Composition, result: ExportResult, exception: ExportException) {
+                fun onError(composition: Composition, result: ExportResult, exception: ExportException) {
                     onDone(Result.failure(exception))
                 }
             })
