@@ -28,7 +28,19 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
-          ./gradlew :app:assembleDebug --no-daemon --stacktrace --warning-mode=summary --console=plain 2>&1 | tee build.log
+          set -o pipefail
+
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace --console=plain 2>&1 | tee build.log
+
+          echo "==== FIRST FAILURE BLOCK ===="
+
+          # מדפיס רק את החלק הראשון שמסביר למה נפל
+
+          awk \'BEGIN{p=0} /\:app\:.*FAILED/{p=1} p{print} /BUILD FAILED|FAILURE: Build failed/{exit}\' build.log || true
+
+          echo "==== KOTLIN/ADBIND ERRORS (filtered) ===="
+
+          grep -nE "e: file://|ERROR: <|Unresolved reference|Compilation error|ModuleVersionNotFoundException" build.log | head -n 200 || true
 
       - name: Show error summary
         if: always()
