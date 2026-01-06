@@ -1,7 +1,6 @@
 package com.pasiflonet.mobile.ui
 
 import android.content.Intent
-import com.pasiflonet.mobile.util.CrashLogger
 import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
@@ -11,6 +10,8 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.pasiflonet.mobile.R
+import com.pasiflonet.mobile.util.CrashLogger
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var etTargetChannel: TextInputEditText
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton("OK", null)
                 .show()
         }
+
         findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_settings -> { startActivity(Intent(this, SettingsActivity::class.java)); true }
@@ -59,27 +61,27 @@ class MainActivity : AppCompatActivity() {
             val (count, bytes) = clearPasiflonetTmpCount()
             android.widget.Toast.makeText(
                 this,
-                "נוקו $count קבצים (" + (bytes/1024).toString() + "KB)",
+                "נוקו $count קבצים (" + (bytes / 1024).toString() + "KB)",
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         }
 
-tvStatus.text = "סטטוס: בחר וידאו כדי להתחיל"
-    }
-            android.widget.Toast.makeText(this, "נוקו קבצים זמניים", android.widget.Toast.LENGTH_SHORT).show()
-        } catch (t: Throwable) {
-            android.widget.Toast.makeText(this, "ניקוי זמניים נכשל: " + (t.message ?: ""), android.widget.Toast.LENGTH_LONG).show()
+        // אם יש לך כפתור בשם btnMessages ב-XML – נשתמש בו.
+        // אם אין, פשוט תוסיף כפתור ב-activity_main.xml או תגיד לי ואייצר לך אוטומטית.
+        val btnMessages = findViewById<MaterialButton?>(R.id.btnMessages)
+        btnMessages?.setOnClickListener {
+            startActivity(Intent(this, MessagesActivity::class.java))
         }
-    }
 
+        tvStatus.text = "סטטוס: בחר וידאו כדי להתחיל"
+    }
 
     // Safe: deletes ONLY cacheDir/pasiflonet_tmp
-    private fun clearPasiflonetTmpCount(): kotlin.Pair<Int, Long> {
+    private fun clearPasiflonetTmpCount(): Pair<Int, Long> {
         val dir = java.io.File(cacheDir, "pasiflonet_tmp")
         var count = 0
         var bytes = 0L
         if (dir.exists()) {
-            // delete children first
             for (f in dir.walkBottomUp()) {
                 if (f.isFile) {
                     count += 1
@@ -91,7 +93,6 @@ tvStatus.text = "סטטוס: בחר וידאו כדי להתחיל"
             }
         }
         try { dir.delete() } catch (_: Throwable) {}
-          return kotlin.Pair(count, bytes)
+        return Pair(count, bytes)
     }
-
 }
