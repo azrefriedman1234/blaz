@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
         
+        
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -13,6 +14,7 @@ dependencyResolutionManagement {
     repositories {
         
         
+
 maven(url = "https://jitpack.io")
                 maven("https://artifactory.appodeal.com/appodeal-public")
 }
