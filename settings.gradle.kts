@@ -10,7 +10,9 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
-        google()
+        
+        maven(url = "https://jitpack.io")
+google()
         mavenCentral()
         gradlePluginPortal()
                 maven("https://artifactory.appodeal.com/appodeal-public")

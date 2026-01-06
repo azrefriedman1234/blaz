@@ -86,7 +86,10 @@ tasks.matching { it.name == "preBuild" }.configureEach {
 dependencies {
     
     
-    // Media3 Transformer (replaces FFmpegKit)
+    
+    // TDLib (via JitPack)
+    implementation("com.github.tdlibx:td:1.8.56")
+// Media3 Transformer (replaces FFmpegKit)
     implementation("androidx.media3:media3-transformer:1.9.0")
     implementation("androidx.media3:media3-effect:1.9.0")
     implementation("androidx.media3:media3-common:1.9.0")

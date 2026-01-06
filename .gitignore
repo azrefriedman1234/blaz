@@ -29,3 +29,12 @@ tmp/
 **/*.aar
 **/*.jar
 
+
+# big binaries (do not commit)
+*.aar
+*.jar
+*.so
+/tmp/
+/tmp/**
+app/tmp/
+app/tmp/**
