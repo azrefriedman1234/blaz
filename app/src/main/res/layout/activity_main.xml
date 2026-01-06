@@ -85,7 +85,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages"
+        android:id="@+id/btnMessages_dup1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הודעות"
@@ -131,7 +131,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages"
+        android:id="@+id/btnMessages_dup2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הודעות"
@@ -143,7 +143,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMessages"
+        android:id="@+id/btnMessages_dup3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הודעות"
