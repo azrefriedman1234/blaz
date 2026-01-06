@@ -28,6 +28,7 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
+          set -e
           set -o pipefail
 
           ./gradlew :app:assembleDebug --no-daemon --stacktrace --console=plain 2>&1 | tee build.log
