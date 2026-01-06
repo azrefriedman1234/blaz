@@ -1,22 +1,19 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url = uri("https://artifactory.appodeal.com/appodeal-public") }
-        maven { url = uri("https://jitpack.io") }
+        gradlePluginPortal()
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-        maven { url = uri("https://artifactory.appodeal.com/appodeal-public") }
+        maven(url = uri("https://jitpack.io"))
     }
 }
 
-rootProject.name = "sssazre"
+rootProject.name = "pasiflonet_mobile"
 include(":app")

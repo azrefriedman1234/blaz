@@ -1,9 +1,9 @@
 import java.net.URL
 
 plugins {
-    id("com.android.application") version "8.2.2"
-    id("org.jetbrains.kotlin.android") version "1.9.22"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -34,8 +34,7 @@ android {
     }
 
     buildFeatures {
-    dataBinding = false
-    dataBinding = false
+        dataBinding = false
         viewBinding = true
     }
 
