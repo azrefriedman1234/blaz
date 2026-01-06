@@ -13,6 +13,7 @@ import androidx.media3.transformer.Composition
 import androidx.media3.transformer.ExportResult
 import com.google.common.collect.ImmutableList
 import java.io.File
+import java.util.concurrent.CountDownLatch
 
 @UnstableApi
 object VideoEditPipeline {
@@ -67,4 +68,37 @@ object VideoEditPipeline {
             onDone(Result.failure(t))
         }
     }
+
+    data class EditResult(val outFile: File)
+
+    /**
+     * Blocking export used by DetailsActivity (runs on your own background Thread).
+     */
+    fun editVideoBlocking(
+        ctx: Context,
+        input: Uri,
+        blurRects: List<BlurRectN>,
+        watermarkText: String?
+    ): EditResult {
+        val latch = CountDownLatch(1)
+        var res: Result<Uri>? = null
+
+        export(
+            context = ctx,
+            inputUri = input,
+            blurRects = blurRects,
+            watermark = if (watermarkText.isNullOrBlank()) null else WatermarkConfig(text = watermarkText),
+            onDone = { r ->
+                res = r
+                latch.countDown()
+            }
+        )
+
+        latch.await()
+
+        val uri = res?.getOrNull() ?: throw (res?.exceptionOrNull() ?: RuntimeException("Export failed"))
+        val f = File(uri.path ?: throw RuntimeException("No output path"))
+        return EditResult(outFile = f)
+    }
+
 }

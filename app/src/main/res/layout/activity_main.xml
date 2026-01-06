@@ -61,7 +61,15 @@
                         android:layout_weight="1"
                         android:layout_marginStart="10dp"
                         android:text="נקה זמניים"/>
-                </LinearLayout>
+                
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הודעות"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
 
                 <TextView
                     android:id="@+id/tvStatus"
@@ -70,7 +78,15 @@
                     android:layout_marginTop="10dp"
                     android:text="סטטוס: מוכן"
                     android:textSize="14sp"/>
-            </LinearLayout>
+            
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הודעות"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -106,8 +122,24 @@
                         android:text="(לוגים יופיעו כאן...)"
                         android:textSize="12sp"/>
                 </ScrollView>
-            </LinearLayout>
+            
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הודעות"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הודעות"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
